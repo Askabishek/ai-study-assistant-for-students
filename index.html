@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Study Assistant</title>
+</head>
+<body style="font-family: Arial; text-align:center;">
+
+<h1>🤖 AI Study Assistant</h1>
+
+<div id="messages"></div>
+
+<input type="text" id="input" placeholder="Ask something..." />
+<button onclick="sendMessage()">Send</button>
+
+<script>
+async function sendMessage() {
+    let input = document.getElementById("input");
+    let message = input.value;
+
+    if (!message) return;
+
+    let res = await fetch("https://ai-study-assistant.onrender.com/chat"), {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+    });
+
+    let data = await res.json();
+
+    let div = document.createElement("div");
+    div.innerText = "AI: " + data.ai;
+
+    document.getElementById("messages").appendChild(div);
+
+    input.value = "";
+}
+</script>
+
+</body>
+</html>
